@@ -1,25 +1,26 @@
-def factor(num):
-    factors = []
-    for i in range(1, num//2+1):
-        if num % i == 0:
-            factors.append(i)
-    factors.append(num)
-    return factors
+from collections import defaultdict
 
-def calcNumGifts(houseNum):
-    factors = factor(houseNum)
-    numGifts = 0
-    for num in factors:
-        numGifts += (num * 10)
-    return numGifts
+target = 34000000
 
+def part1(upperBound):
+    houses = defaultdict(int)
 
+    for elf in range(1, target):
+        for house in range(elf, upperBound, elf):
+            houses[house] += elf*10
 
-FinalNumGifts = 34000000
-i = 600000
-numGifts = calcNumGifts(i)
-while numGifts != FinalNumGifts:
-    print(i, numGifts)
-    i += 1
-    numGifts = calcNumGifts(i)
-print(i)
+        if houses[elf] >= target:
+            return elf
+
+def part2(upperBound):
+    houses = defaultdict(int)
+
+    for elf in range(1, target):
+        for house in range(elf, min(elf*50+1, upperBound), elf):
+            houses[house] += elf*11
+
+        if houses[elf] >= target:
+            return elf
+
+print(part1(1000000))
+print(part2(1000000))
