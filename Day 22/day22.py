@@ -28,7 +28,7 @@ def doTurn(player, boss):
 
     bossDamage = boss["Damage"]
     bossDamage -= player["Armor"]
-    if bossDamage < 0:
+    if bossDamage <= 0:
         bossDamage = 1
     player["Hit Points"] -= bossDamage
 
@@ -48,32 +48,32 @@ def isDead(person):
         return False
 
 def calcLowestManaWin(player, boss, spells, action="", counter=0):
+    playerCopy = player.copy()
+    bossCopy = boss.copy()
     if action == "":
         minCost = sys.maxsize
-        for key in player["Effects"].keys():
-            cost = calcLowestManaWin(player, boss, spells, key, counter+1)
+        for key in playerCopy["Effects"].keys():
+            cost = calcLowestManaWin(playerCopy, bossCopy, spells, key, counter+1)
             if cost < minCost:
                 minCost = cost
         return minCost
     else:
-        actionResult = doAction(player, action, spells)
+        actionResult = doAction(playerCopy, action, spells)
         if actionResult == "not enough mana":
             return sys.maxsize
         elif actionResult == "already used":
             return sys.maxsize
         else:
-            doTurn(player, boss)
-            if isDead(boss):
+            doTurn(playerCopy, bossCopy)
+            if isDead(bossCopy):
                 return spells[action][1]
-            elif isDead(player):
+            elif isDead(playerCopy):
                 return sys.maxsize
             else:
                 minCost = sys.maxsize
-                for key, value in player["Effects"].items():
+                for key, value in playerCopy["Effects"].items():
                     if value == 0:
-                        print("key", key)
-                        print("counter", counter)
-                        cost = calcLowestManaWin(player, boss, spells, key, counter+1)
+                        cost = calcLowestManaWin(playerCopy, bossCopy, spells, key, counter+1)
                         if cost < minCost:
                             minCost = cost
                 return minCost + spells[action][1]
