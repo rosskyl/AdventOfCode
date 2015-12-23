@@ -19,9 +19,12 @@ def doTurn(player, boss):
                 boss["Hit Points"] -= 2
                 player["Hit Points"] += 2
             elif key == "Shield":
-                player["Armor"] = 7
+                player["Armor"] += 7
             elif key == "Poison":
-                boss["Hit Points"] -= 3
+                if player["Effects"][key] == 6:
+                    boss["Hit Points"] -= 3
+                else:
+                    boss["Hit Points"] -= 6
             elif key == "Recharge":
                 player["Mana"] += 101
             player["Effects"][key] -= 1
@@ -72,6 +75,7 @@ def calcLowestManaWin(player, boss, spells, action="", counter=0):
             else:
                 minCost = sys.maxsize
                 for key, value in playerCopy["Effects"].items():
+                    print(" " * counter, boss)
                     if value == 0:
                         cost = calcLowestManaWin(playerCopy, bossCopy, spells, key, counter+1)
                         if cost < minCost:
@@ -84,6 +88,10 @@ boss = parseFile("textFile.txt")
 spells = {"Magic Missile": [1, 53], "Drain": [1, 73], "Shield": [6, 113], "Poison": [6, 173], "Recharge": [5, 229]}
 
 playerSpells = {"Magic Missile": 0, "Drain": 0, "Shield": 0, "Poison": 0, "Recharge": 0}
-player = {"Hit Points": 50, "Damage": 0, "Armor": 0, "Mana": 500, "Effects": playerSpells}
+
+player = {"Hit Points": 10, "Damage": 0, "Armor": 0, "Mana": 250, "Effects": playerSpells}
+boss = {"Hit Points": 13, "Damage": 8}
+#player = {"Hit Points": 50, "Damage": 0, "Armor": 0, "Mana": 500, "Effects": playerSpells}
+
 
 print(calcLowestManaWin(player, boss, spells))
