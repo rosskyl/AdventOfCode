@@ -1,6 +1,5 @@
 import sys, copy
 
-
 def parseFile(filename):
     with open(filename, "r") as file:
         lines = file.readlines()
@@ -10,7 +9,7 @@ def parseFile(filename):
             boss[line[0]] = int(line[1])
     return boss
 
-def doTurn(player, boss):
+def doTurn(player, boss, person):
     for key, value in player["Effects"].items():
         if value > 0:
             if key == "Magic Missile":
@@ -21,21 +20,18 @@ def doTurn(player, boss):
             elif key == "Shield":
                 player["Armor"] = 7
             elif key == "Poison":
-                if player["Effects"][key] == 6:
-                    boss["Hit Points"] -= 3
-                else:
-                    boss["Hit Points"] -= 6
+                boss["Hit Points"] -= 3
             elif key == "Recharge":
                 player["Mana"] += 101
             player["Effects"][key] -= 1
+    if person == "boss":
+        bossDamage = boss["Damage"]
+        bossDamage -= player["Armor"]
+        if bossDamage <= 0:
+            bossDamage = 1
+        player["Hit Points"] -= bossDamage
 
-    bossDamage = boss["Damage"]
-    bossDamage -= player["Armor"]
-    if bossDamage <= 0:
-        bossDamage = 1
-    player["Hit Points"] -= bossDamage
-
-def doAction(player, spellName, spells):
+def doSpell(player, spellName, spells):
     if player["Mana"] < spells[spellName][0]:
         return "not enough mana"
     elif player["Effects"][spellName] > 0:
@@ -62,13 +58,14 @@ def calcLowestManaWin(player, boss, spells, action="", counter=0):
                 minCost = cost
         return minCost
     else:
-        actionResult = doAction(playerCopy, action, spells)
+        actionResult = doSpell(playerCopy, action, spells)
         if actionResult == "not enough mana":
             return sys.maxsize
         elif actionResult == "already used":
             return sys.maxsize
         else:
-            doTurn(playerCopy, bossCopy)
+            doTurn(playerCopy, bossCopy, "player")
+            doTurn(playerCopy, bossCopy, "boss")
             if isDead(bossCopy):
                 return spells[action][1]
             elif isDead(playerCopy):
@@ -90,9 +87,6 @@ spells = {"Magic Missile": [1, 53], "Drain": [1, 73], "Shield": [6, 113], "Poiso
 
 playerSpells = {"Magic Missile": 0, "Drain": 0, "Shield": 0, "Poison": 0, "Recharge": 0}
 
-#player = {"Hit Points": 10, "Damage": 0, "Armor": 0, "Mana": 250, "Effects": playerSpells}
-#boss = {"Hit Points": 13, "Damage": 8}
 player = {"Hit Points": 50, "Damage": 0, "Armor": 0, "Mana": 500, "Effects": playerSpells}
-
 
 print(calcLowestManaWin(player, boss, spells))
