@@ -34,11 +34,20 @@ inputs = "R3, L2, L2, R4, L1, R2, R3, R4, L2, R4, L2, L5, L1, R5, R2, R2, L1, R4
 inputs = inputs.split(", ")
 
 start = [0, 0]
-
+visited = []
+finalAnswer = []
 d = "n"
 for line in inputs:
     d = changeDirection(d, line[0])
-    start = move(start, d, int(line[1:]))
+    for i in range(int(line[1:])):
+        start = move(start, d, 1)
+        if start in visited:
+            finalAnswer.append(start[:])
+        else:
+            visited.append(start[:])
 
 print("Ending at", start, "which is", abs(start[0])+abs(start[1]), "blocks away from where you started")
 #first answer is 262
+
+print("Final answer is", abs(finalAnswer[0][0])+abs(finalAnswer[0][1]))
+#final answer is 131
