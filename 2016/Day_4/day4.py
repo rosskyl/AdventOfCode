@@ -45,6 +45,7 @@ def orderList(myString):
 
 def isRoom(line):
     name = line[0]
+    sector = line[1]
     checksum = line[2]
     counts = count(name)
     ordered = orderDict(counts)
@@ -53,27 +54,46 @@ def isRoom(line):
             return False
     return True
 
+def unencrypt(name, sector):
+    letters = "abcdefghijklmnopqrstuvwxyz"
+    sector = sector % 26
+    newName = ""
+    for letter in name:
+        index = letters.find(letter) + sector
+        if index >= len(letters):
+            index -= 26
+        newName = newName + letters[index]
+    return newName
 
 
 
 
-
-#inputs = """not-a-real-room-404[oarel]
-#a-b-c-d-e-f-g-h-987[abcde]
-#aaaaa-bbb-z-y-x-123[abxyz]
-#totally-real-room-200[decoy]"""
-#lines = inputs.splitlines()
+inputs = """not-a-real-room-404[oarel]
+a-b-c-d-e-f-g-h-987[abcde]
+aaaaa-bbb-z-y-x-123[abxyz]
+totally-real-room-200[decoy]
+"""
+lines = inputs.splitlines()
 
 inFile = open("input.txt", "r")
 lines = inFile.readlines()
 inFile.close()
 
 
+validRooms = []
 total = 0
 for i in range(len(lines)):
     lines[i] = formatLine(lines[i])
     if isRoom(lines[i]):
         total += lines[i][1]
+        validRooms.append(lines[i])
+
+for room in validRooms:
+    name = unencrypt(room[0], room[1])
+    if "north" in name:
+        print(room[1])
 
 print(total)
 #answer is 173787
+
+#final answer is 548
