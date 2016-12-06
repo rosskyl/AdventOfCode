@@ -19,10 +19,40 @@ def getWord(counts):
         word = word + maxL
     return word
 
+def getRealWord(counts):
+    word = ""
+    for letterDict in counts:
+        minV = 0
+        minL = ""
+        for key in letterDict.keys():
+            if letterDict[key] < minV:
+                minV = letterDict[key]
+                minL = key
+        word = word + minL
+    return word
+
 inFile = open("input.txt", "r")
 lines = inFile.readlines()
 inFile.close()
 
+lines = """eedadn
+drvtee
+eandsr
+raavrd
+atevrs
+tsrnev
+sdttsa
+rasrtv
+nssdts
+ntnada
+svetve
+tesnvt
+vntsnd
+vrdear
+dvrsen
+enarar"""
+
+lines = lines.splitlines()
 
 counts = [{} for i in lines[0].rstrip()]
 
