@@ -33,6 +33,30 @@ def supportTLS(ip):
     else:
         return False
 
+def containsABA(word):
+    ABA = []
+    for i in range(1, len(word)-1):
+        if word[i-1] == word[i+1] and word[i-1] != word[i] and word[i-1] != " " and word[i] != " ":
+            ABA.append([word[i-1], word[i]])
+    return len(ABA) != 0, ABA
+
+def containsBAB(word, ABA):
+    for i in range(1, len(word)-1):
+        if word[i-1] == word[i+1] and word[i-1] != word[i] and word[i-1] != " " and word[i] != " ":
+            ab = [word[i], word[i-1]]
+            for each in ABA:
+                if ab == each:
+                    return True
+    return False
+
+def supportSSL(ip):
+    ip = split(ip)
+    if containsABA(ip[0])[0]:
+        x,ab = containsABA(ip[0])
+        if containsBAB(ip[1], ab):
+            return True
+    return False
+
 
 
 lines = """abba[mnop]qrst
@@ -45,10 +69,16 @@ inFile = open("input.txt", "r")
 lines = inFile.readlines()
 inFile.close()
 
-total = 0
+total1 = 0
+total2 = 0
 for line in lines:
     if supportTLS(line):
-        total += 1
+        total1 += 1
+    if supportSSL(line):
+        total2 += 1
 
-print(total)
+print(total1)
 #first answer is 118
+
+print(total2)
+#final solution is 260
