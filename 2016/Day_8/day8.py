@@ -37,14 +37,15 @@ def rotateCol(screen, x, amt):
 
 def printScreen(screen):
     for i in range(len(screen)):
-        print(screen[i])
+        for j in range(len(screen[i])):
+            print(screen[i][j], end="")
+        print()
 
 def countLit(screen):
     total = 0
     for i in range(len(screen)):
         total += screen[i].count("#")
     return total
-
 
 
 lines = """rect 3x2
@@ -66,3 +67,7 @@ for line in lines:
     parseLine(line, screen)
 
 print(countLit(screen))
+#first solution is 119
+
+printScreen(screen)
+#final solution is ZFHFSFOGPO
