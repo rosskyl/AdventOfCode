@@ -25,12 +25,18 @@ def addBot(bot, low, high, bots):
 
 def giveValue(bot, value):
     result = bots[bot].addValue(value)
+    returned = 1
     if result:
         l,h = bots[bot].getValues()
         if bots[bot].low[0] == "bot":
-            giveValue(bots[bot].low[1], l)
+            returned *= giveValue(bots[bot].low[1], l)
+        elif bots[bot].low[0] == "output" and bots[bot].low[1] in[0,1,2]:
+            returned *= l
         if bots[bot].high[0] == "bot":
-            giveValue(bots[bot].high[1], h)
+            returned *= giveValue(bots[bot].high[1], h)
+        elif bots[bot].high[0] == "output" and bots[bot].high[1] in[0,1,2]:
+            returned *= h
+    return returned
 
 
 
@@ -63,7 +69,11 @@ for line in lines:
         high = [line[10], int(line[11])]
         addBot(bot, low, high, bots)
 
+total = 1
 for line in values:
-    giveValue(line[0], line[1])
+    total = total * giveValue(line[0], line[1])
 
 #first solution is 118
+
+print(total)
+#final solution is 143153
