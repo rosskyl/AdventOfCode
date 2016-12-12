@@ -13,7 +13,7 @@ lines = inFile.readlines()
 inFile.close()
 
 
-registers = [0,0,0,0]
+registers = [0,0,1,0]
 
 index = 0
 while index < len(lines):
@@ -46,3 +46,4 @@ while index < len(lines):
 
 print(registers)
 #first solution is 317993
+#final solution is 9227647
