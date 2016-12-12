@@ -30,14 +30,37 @@ def deepCopy(myDict):
         newDict[key] = myDict[key].copy()
     return newDict
 
-def test(floors, elevator, trials=0):
-    removeComplete(floors, trials)
-    while len(floors[elevator]) == 0 and elevator < 4:
-        elevator += 1
+def getState(floors, elevator):
+    state = []
+    for key in floors.keys():
+        chips = []
+        gens = []
+        for v in floors[key]:
+            if v[-1] == "m":
+                chips.append(v)
+            elif v[-1] == "g":
+                gens.append(v)
+        pairs = 0
+        for chip in chips:
+            if chip[:-1]+"g" in gens:
+                pairs += 1
+        state.append([len(chips), len(gens), pairs])
+    state.append(elevator)
+    return state
+
+def test(floors, elevator, states):
+#    removeComplete(floors, trials)
+#    while len(floors[elevator]) == 0 and elevator < 4:
+#        elevator += 1
     if not validFloors(floors):
         return -1
     elif floors[1] == [] and floors[2] == [] and floors[3] == []:
         return 0
+    thisState = getState(floors, elevator)
+    if thisState in states:
+        return -1
+    else:
+        states.append(thisState)
     minV = 10**1000
     if len(floors[elevator]) >= 2:
         for i in range(1,3):
@@ -47,19 +70,19 @@ def test(floors, elevator, trials=0):
                     if dir == "up" and elevator < 4:
                         tmpElevator = elevator + 1
                     elif dir == "down" and elevator == 2 and floors[1] == []:
-                        break
-                    elif dir == "down" and elevator == 2 and floors[1] == [] and floors[2] == []:
-                        break
-                    elif dir == "down" and i == 2 and combo[0][:-1] == combo[1][:-1]:
-                        break
+                        continue
+                    elif dir == "down" and elevator == 3 and floors[1] == [] and floors[2] == []:
+                        continue
+#                    elif dir == "down" and i == 2 and combo[0][:-1] == combo[1][:-1]:
+#                        continue
                     elif dir == "down" and elevator > 1:
                         tmpElevator = elevator - 1
                     else:
-                        break
+                        continue
                     for v in combo:
                         tmpFloors[elevator].remove(v)
                         tmpFloors[tmpElevator].append(v)
-                    v = test(tmpFloors, tmpElevator, trials+1)
+                    v = test(tmpFloors, tmpElevator, states)
                     if v != -1 and v < minV:
                         minV = v
     else:
@@ -68,17 +91,19 @@ def test(floors, elevator, trials=0):
             if dir == "up" and elevator < 4:
                 tmpElevator = elevator + 1
             elif dir == "down" and elevator == 2 and floors[1] == []:
-                break
+                continue
             elif dir == "down" and elevator == 2 and floors[1] == [] and floors[2] == []:
-                break
+                continue
             elif dir == "down" and elevator > 1:
                 tmpElevator = elevator - 1
             else:
-                break
+                continue
+            if len(tmpFloors[elevator]) == 0:
+                return -1
             v = tmpFloors[elevator][0]
             tmpFloors[elevator].remove(v)
             tmpFloors[tmpElevator].append(v)
-            v = test(tmpFloors, tmpElevator, trials+1)
+            v = test(tmpFloors, tmpElevator, states)
             if v != -1 and v < minV:
                 minV = v
     return minV + 1
@@ -107,33 +132,14 @@ def printFloors(floors, elevator):
 
 
 
-floors = {1:[], 2:["lim"], 3:["lig"], 4:[]}
-floors = {1:["prg", "prm"], 2:["cog","cug","rug","plg"], 3:["com","cum","rum","plm"], 4:[]}
+floors = {1:["lim", "him"], 2:["hig"], 3:["lig"], 4:[]}
+#floors = {1:["prg", "prm"], 2:["cog","cug","rug","plg"], 3:["com","cum","rum","plm"], 4:[]}
 elevator = 1
-cap = 2
-"""
-floors = {1:[], 2:["cog","cug","rug","plg","prg", "prm"], 3:["com","cum","rum","plm"], 4:[]}
-elevator = 2
-floors = {1:[], 2:["cog","cug","rug","plg","prg"], 3:["com","cum","rum","plm", "prm"], 4:[]}
-elevator = 3
-floors = {1:[], 2:["cog","cug","rug","plg","prg","com","cum"], 3:["rum","plm", "prm"], 4:[]}
-elevator = 2
-floors = {1:[], 2:["cog","cug","rug","plg","prg","com"], 3:["rum","plm", "prm","cum"], 4:[]}
-elevator = 3
-floors = {1:[], 2:["cog","cug","rug","plg","prg","com","rum","plm"], 3:["prm","cum"], 4:[]}
-elevator = 2
-floors = {1:[], 2:["cog","cug","rug","plg","prg","com","rum"], 3:["prm","cum","plm"], 4:[]}
-elevator = 3
-floors = {1:[], 2:["cog","cug","rug","plg","prg","com","rum","cum","plm"], 3:["prm"], 4:[]}
-elevator = 2
-floors = {1:[], 2:["cog","cug","rug","plg","prg","com","rum","cum"], 3:["prm","plm"], 4:[]}
-elevator = 3
-floors = {1:[], 2:["cog","cug","rug","plg","prg","com","rum","cum","prm","plm"], 3:[], 4:[]}
-elevator = 2
-"""
+states = []
 #m can't be on same floor as g of different type unless has g on same floor
 
-print(test(floors, elevator))
+print(test(floors, elevator, states))
 #this does not work
 #first solution should be 33
 #final solution should be 57
+
