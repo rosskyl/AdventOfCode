@@ -6,6 +6,14 @@ def getHash(name):
     m.update(name.encode())
     return m.hexdigest()
 
+def getHash2016(name):
+    hash = name
+    for i in range(2017):
+        m = hashlib.md5()
+        m.update(hash.encode())
+        hash = m.hexdigest()
+    return hash
+
 def containsTriple(hexHash):
     match = re.findall(r"(.)\1\1", hexHash)
     if len(match) > 0:
@@ -25,7 +33,7 @@ def getKeys(salt):
     potentialKeys = []
     index = 0
     while len(keys) < 64:
-        hexHash = getHash(salt + str(index))
+        hexHash = getHash2016(salt + str(index))
         triple, letter = containsTriple(hexHash)
         if triple:
             potentialKeys.append([index, letter])
@@ -58,4 +66,5 @@ def getKeys(salt):
 keys = getKeys("yjdafjpo")
 print(len(keys))
 print(keys[63])
-
+#first solution is 25427
+#final solution is 22045
