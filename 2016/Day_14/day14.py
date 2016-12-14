@@ -54,7 +54,8 @@ def getKeys(salt):
     keys.sort()
     return keys
 
-keys = getKeys("abc")
+#keys = getKeys("abc")
+keys = getKeys("yjdafjpo")
 print(len(keys))
 print(keys[63])
 
