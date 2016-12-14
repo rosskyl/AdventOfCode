@@ -31,9 +31,7 @@ def getKeys(salt):
             potentialKeys.append([index, letter])
             five, letter = containsFive(hexHash)
             if five:
-                for potKey, potLetter in potentialKeys:
-                    if potKey == 110:
-                        print("here")
+                for potKey, potLetter in potentialKeys.copy():
                     if potLetter == letter and potKey + 1000 >= index and index != potKey:
                         keys.append(potKey)
                         potentialKeys.remove([potKey, potLetter])
@@ -57,15 +55,6 @@ def getKeys(salt):
     return keys
 
 keys = getKeys("abc")
-print(keys)
 print(len(keys))
 print(keys[63])
-index = 110
-letter = containsTriple(getHash("abc110"))[1]
-for i in range(1,1001):
-    hexHash = getHash("abc" + str(index + i))
-    five, potLet = containsFive(hexHash)
-    if five and potLet == letter:
-        print(index + i)
 
-print(containsTriple(getHash("abc110")))
