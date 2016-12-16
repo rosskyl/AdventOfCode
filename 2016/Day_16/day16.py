@@ -31,3 +31,9 @@ length = 272
 data = generateRandomData(data, length)
 print(checksum(data, length))
 #first solution is 11100110111101110
+
+data = "10111100110001111"
+length = 35651584
+data = generateRandomData(data, length)
+print(checksum(data, length))
+#final solution is 10001101010000101
