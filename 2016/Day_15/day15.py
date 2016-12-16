@@ -7,7 +7,7 @@ def checkTime(discs, time):
 
 
 #discs = [[5,4], [2,1]]
-discs = [[17,5],[19,8],[7,1],[13,7],[5,1],[3,0]]
+discs = [[17,5],[19,8],[7,1],[13,7],[5,1],[3,0],[11,0]]
 
 
 
@@ -17,3 +17,4 @@ while not checkTime(discs, time):
 
 print(time)
 #first answer is 16824
+#final anser is 3543984
