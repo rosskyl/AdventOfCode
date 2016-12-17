@@ -1,4 +1,5 @@
 import hashlib
+import time
 
 def getHash(name):
     m = hashlib.md5()
@@ -81,16 +82,25 @@ def getLongLength(passcode, loc, path=""):
     return finalPath
 
 
+def main():
+    loc = [0,0]
+    passcode = "hhhxzeay"
+    global shortest
+    shortest = 10*100
+    global longest
+    longest = -1
+    short = getShortLength(passcode, loc)
+    print(short, len(short))
+    #first answer is DDRUDLRRRD
+    long = getLongLength(passcode, loc)
+    print(long, len(long))
+    #final answer is 398
 
-loc = [0,0]
-passcode = "hhhxzeay"
-global shortest
-shortest = 10*100
-global longest
-longest = -1
-short = getShortLength(passcode, loc)
-print(short, len(short))
-#first answer is DDRUDLRRRD
-long = getLongLength(passcode, loc)
-print(long, len(long))
-#final answer is 398
+start = time.clock()
+main()
+end = time.clock()
+
+print()
+print("Started at:",start)
+print("Ended at:",end)
+print("Time elapsed:", (end-start))
