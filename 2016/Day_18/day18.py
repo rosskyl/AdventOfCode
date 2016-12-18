@@ -42,9 +42,38 @@ def countSafeTiles(rows):
                 safe += 1
     return safe
 
+def createAndCount(firstRow, numRows):
+    prevRow = list(firstRow)
+    row = 0
+    safe = prevRow.count(".")
+    while row < numRows-1:
+        nextRow = []
+        for i in range(len(prevRow)):
+            if i == 0 and isSafeTile(".", prevRow[0], prevRow[1]):
+                nextRow.append(".")
+                safe += 1
+            elif i == 0:
+                nextRow.append("^")
+            elif i == len(prevRow)-1 and isSafeTile(prevRow[i-1], prevRow[i], "."):
+                nextRow.append(".")
+                safe += 1
+            elif i == len(prevRow)-1:
+                nextRow.append("^")
+            elif isSafeTile(prevRow[i-1], prevRow[i], prevRow[i+1]):
+                nextRow.append(".")
+                safe += 1
+            else:
+                nextRow.append("^")
+        row += 1
+        prevRow = nextRow
+    return safe
+
 firstRow = ".^^.^.^^^^"
 firstRow = ".^^.^^^..^.^..^.^^.^^^^.^^.^^...^..^...^^^..^^...^..^^^^^^..^.^^^..^.^^^^.^^^.^...^^^.^^.^^^.^.^^.^."
-rows = createField(firstRow, 40)
+#rows = createField(firstRow, 40)
 #printField(rows)
-print(countSafeTiles(rows))
+#print(countSafeTiles(rows))
 #first answer is 1951
+
+print(createAndCount(firstRow, 400000))
+#final answer is 20002936
