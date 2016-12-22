@@ -1,3 +1,5 @@
+from itertools import permutations
+
 def swapPosition(line, pwd):
     x = int(line[2])
     y = int(line[-1])
@@ -75,9 +77,15 @@ def parseLine(line, pwd):
     return pwd
 
 def part1(lines, pwd):
+    pwd = list(pwd)
     for line in lines:
         pwd = parseLine(line, pwd)
     return "".join(pwd)
+
+def part2(lines, pwd):
+    for p in permutations(pwd):
+        if pwd == part1(lines, p):
+            return "".join(p)
 
 
 
@@ -95,7 +103,11 @@ pwd = list("abcde")
 inFile = open("input.txt", "r")
 lines = inFile.readlines()
 inFile.close()
-pwd = list("abcdefgh")
+pwd = "abcdefgh"
 
 print(part1(lines, pwd))
 #first solution is gcedfahb
+
+pwd = "fbgdceah"
+print(part2(lines, pwd))
+#final solution is hegbdcfa
