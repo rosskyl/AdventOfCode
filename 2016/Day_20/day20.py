@@ -8,20 +8,29 @@ def createBlacklist(lines):
     blacklist.sort()
     return blacklist
 
-def getLowestValid(blacklist):
+def getValid(blacklist, max):
     ip = 0
     index = 0
     lowest = None
-    while lowest == None:
-        start, end = blacklist[index]
-        if ip >= start:
-            if ip <= end:
+    total = 0
+    while ip <= max:
+        if index < len(blacklist):
+            start, end = blacklist[index]
+            if ip >= start and ip <= end:
                 ip = end + 1
-            else:
                 index += 1
+            elif ip >= start and ip > end:
+                index += 1
+            else:
+                total += 1
+                if lowest == None:
+                    lowest = ip
+                ip += 1
         else:
-            lowest = ip
-    return lowest
+            total += 1
+            ip += 1
+
+    return lowest, total
 
 
 
@@ -29,17 +38,17 @@ lines = """5-8
 0-2
 4-7"""
 lines = lines.splitlines()
-numIPs = 10
+numIPs = 9
 
 
 inFile = open("input.txt", "r")
 lines = inFile.readlines()
 inFile.close()
-numIPs = 4294967295 + 1
-
+numIPs = 4294967295
 
 
 blacklist = createBlacklist(lines)
-lowest = getLowestValid(blacklist)
+lowest = getValid(blacklist, numIPs)
 print(lowest)
 #first answer is 31053880
+#final answer is 117
