@@ -74,8 +74,10 @@ def parseLine(line, pwd):
         pwd = move(line, pwd)
     return pwd
 
-
-
+def part1(lines, pwd):
+    for line in lines:
+        pwd = parseLine(line, pwd)
+    return "".join(pwd)
 
 
 
@@ -95,9 +97,5 @@ lines = inFile.readlines()
 inFile.close()
 pwd = list("abcdefgh")
 
-
-for line in lines:
-    pwd = parseLine(line, pwd)
-
-print("".join(pwd))
-#first answer is gcedfahb
+print(part1(lines, pwd))
+#first solution is gcedfahb
