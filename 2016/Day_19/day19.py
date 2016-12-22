@@ -21,7 +21,7 @@ def createElves(numElves):
     elves[-1].next = elves[0]
     return elves
 
-def removeElves(elf1):
+def removeElvesPart1(elf1):
     next = elf1.next
     curr = elf1
     while curr != next:
@@ -30,9 +30,24 @@ def removeElves(elf1):
         next = curr.next
     return curr.num
 
-numElves = 3012210
+def removeElvesPart2(elf1, midElf, numElves):
+    curr = elf1
+    while curr != curr.next:
+        #print("deleting", midElf.num)
+        midElf.delete()
+        midElf = midElf.next
+        if numElves % 2 == 1:
+            midElf = midElf.next
+        numElves -= 1
+        curr = curr.next
+    return curr.num
 
+numElves = 3012210
+#numElves = 5
 elves = createElves(numElves)
 print("Done creating elves")
-print(removeElves(elves[0]))
+#print(removeElvesPart1(elves[0]))
 #first answer is 1830117
+
+print(removeElvesPart2(elves[0], elves[numElves//2], numElves))
+#final answer is 1417887
