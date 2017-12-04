@@ -43,6 +43,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Day_1\Day1.cs" />
+    <Compile Include="Day_2\Combinations.cs" />
+    <Compile Include="Day_2\Day2.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
