@@ -13,5 +13,12 @@ namespace _2017
         {
             return File.ReadAllText($"Day_{day}\\{filename}");
         }
+
+        public static string[] SplitLines(string text)
+        {
+            string[] lines = text.Split('\n');
+
+            return lines.Select(l => l.Replace("\r", "")).ToArray();
+        }
     }
 }
