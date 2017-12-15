@@ -47,6 +47,7 @@
     <Compile Include="Day_12\Day12.cs" />
     <Compile Include="Day_13\Day13.cs" />
     <Compile Include="Day_14\Day14.cs" />
+    <Compile Include="Day_15\Day15.cs" />
     <Compile Include="Day_1\Day1.cs" />
     <Compile Include="Day_2\Combinations.cs" />
     <Compile Include="Day_2\Day2.cs" />
