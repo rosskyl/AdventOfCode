@@ -10,7 +10,7 @@ namespace _2017
     {
         static void Main(string[] args)
         {
-            Day_16.Day16.Run();
+            Day_17.Day17.Run();
 
 
             Console.WriteLine("Done running. Press enter when finished");
