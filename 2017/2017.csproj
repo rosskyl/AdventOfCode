@@ -56,6 +56,8 @@
     <Compile Include="Day_20\Day20.cs" />
     <Compile Include="Day_20\Particle.cs" />
     <Compile Include="Day_21\Day21.cs" />
+    <Compile Include="Day_22\Day22.cs" />
+    <Compile Include="Day_22\Node.cs" />
     <Compile Include="Day_2\Combinations.cs" />
     <Compile Include="Day_2\Day2.cs" />
     <Compile Include="Day_3\Day3.cs" />
@@ -105,6 +107,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Day_21\Input.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Day_22\Input.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Day_4\input.txt">
