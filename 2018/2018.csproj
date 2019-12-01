@@ -6,4 +6,13 @@
     <RootNamespace>_2018</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Update="Day_1\input.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Day_2\input.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
