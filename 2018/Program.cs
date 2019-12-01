@@ -6,7 +6,7 @@ namespace _2018
     {
         static void Main(string[] args)
         {
-            Day_2.Day2.Run();
+            Day_3.Day3.Run();
             Console.WriteLine("Press enter when finished");
             Console.ReadLine();
         }
