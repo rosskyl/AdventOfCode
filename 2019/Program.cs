@@ -6,7 +6,9 @@ namespace _2019
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Day1.Day1.Run();
+            Console.WriteLine("Press enter when finished");
+            Console.ReadLine();
         }
     }
 }
