@@ -6,7 +6,7 @@ namespace _2021
     {
         static void Main(string[] args)
         {
-            Day3.Run();
+            Day4.Run();
             Console.WriteLine("Press enter when finished");
             Console.ReadLine();
         }
