@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace _2021.Day_1
+namespace _2021
 {
     static class Day1
     {

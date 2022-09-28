@@ -9,9 +9,9 @@ namespace _2021
 {
     public static class ReadInputFile
     {
-        public static string ReadFile(int day, string filename = "input.txt")
+        public static string ReadFile(int day)
         {
-            return File.ReadAllText($"Day_{day}\\{filename}");
+            return File.ReadAllText($"Inputs\\day{day}.txt");
         }
 
         public static string[] SplitLines(string text)
