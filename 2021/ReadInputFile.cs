@@ -20,5 +20,11 @@ namespace _2021
 
             return lines.Select(l => l.Replace("\r", "")).ToArray();
         }
+
+        public static string[] ReadAndSplitFile(int day)
+        {
+            var contents = ReadFile(day);
+            return SplitLines(contents);
+        }
     }
 }
